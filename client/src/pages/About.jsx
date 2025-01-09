@@ -33,14 +33,14 @@ const About = () => {
       </p>
 
       <Link to="/signup">
-        <button className="bg-green-600 text-white py-3 px-6 rounded-md text-xl hover:bg-green-700 transition duration-300">
+        <button className="bg-blue-400 text-white font-semibold py-3 px-6 rounded-md text-xl hover:bg-blue-700 transition duration-300">
           Sign Up Now
         </button>
       </Link>
 
       <p className="mt-6 text-lg">
         Already a member?{" "}
-        <Link to="/signin" className="font-semibold text-green-600">
+        <Link to="/signin" className="font-semibold text-blue-600">
           Log in here
         </Link>
         .

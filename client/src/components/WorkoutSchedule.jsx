@@ -6,6 +6,14 @@ import { useEditExercise } from "../hooks/useEditExercise";
 import { FaEdit, FaSave } from "react-icons/fa";
 
 const WorkoutSchedule = ({ date }) => {
+  const { user } = useAuthContext();
+  const { getExercise } = useGetExercise();
+  const { editExercise } = useEditExercise();
+  const [workout, setWorkout] = useState(null);
+  const [editingExercise, setEditingExercise] = useState(null);
+  const [exerciseData, setExerciseData] = useState({});
+
+  if (!user) return;
   useEffect(() => {
     handleGet();
   }, []);
@@ -48,22 +56,15 @@ const WorkoutSchedule = ({ date }) => {
       Sunday: "Rest",
     },
     Custom: {
-      Monday: "",
-      Tuesday: "",
-      Wednesday: "",
-      Thursday: "",
-      Friday: "",
-      Saturday: "",
-      Sunday: "",
+      Monday: "Custom1",
+      Tuesday: "Custom2",
+      Wednesday: "Custom3",
+      Thursday: "Custom4",
+      Friday: "Custom5",
+      Saturday: "Custom6",
+      Sunday: "Custom7",
     },
   };
-
-  const { user } = useAuthContext();
-  const { getExercise } = useGetExercise();
-  const { editExercise } = useEditExercise();
-  const [workout, setWorkout] = useState(null);
-  const [editingExercise, setEditingExercise] = useState(null);
-  const [exerciseData, setExerciseData] = useState({});
 
   const handleGet = async () => {
     try {
@@ -101,7 +102,7 @@ const WorkoutSchedule = ({ date }) => {
   const handleInputChange = (e, field) => {
     setExerciseData({
       ...exerciseData,
-      [field]: e.target.value,
+      [field]: e.target.value === "" ? "0" : e.target.value,
     });
   };
 
@@ -119,7 +120,7 @@ const WorkoutSchedule = ({ date }) => {
     <div className="p-5">
       <div className="flex justify-between underline">
         <span className="text-center text-2xl text-gray-800">
-          {workoutPlans[user.user.workoutSplit][date]} Day
+          {workoutPlans[user.user.workoutSplit][date]}
         </span>
         <span className="text-center text-2xl text-gray-800">
           {user.user.workoutSplit} Split
@@ -167,18 +168,21 @@ const WorkoutSchedule = ({ date }) => {
                       value={exerciseData.sets}
                       className="border p-2 rounded-md w-1/3 outline-none"
                       onChange={(e) => handleInputChange(e, "sets")}
+                      required
                     />
                     <input
                       type="number"
                       value={exerciseData.reps}
                       className="border p-2 rounded-md w-1/3 outline-none"
                       onChange={(e) => handleInputChange(e, "reps")}
+                      required
                     />
                     <input
                       type="number"
                       value={exerciseData.weight}
                       className="border p-2 rounded-md w-1/3 outline-none"
                       onChange={(e) => handleInputChange(e, "weight")}
+                      required
                     />
                   </div>
                 </div>

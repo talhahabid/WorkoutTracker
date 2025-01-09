@@ -58,7 +58,7 @@ const SignUp = () => {
 
         <button
           disabled={loading}
-          className="bg-indigo-400 text-white rounded-md p-4 px-5 w-96 font-medium hover:opacity-85 focus:outline-none"
+          className="bg-indigo-400 text-white rounded-md p-4 px-5 w-96 font-semibold hover:opacity-85 focus:outline-none"
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>

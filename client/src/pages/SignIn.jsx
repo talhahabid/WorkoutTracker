@@ -46,7 +46,7 @@ const SignIn = () => {
           className="border rounded-md p-4 px-5 w-96 focus:outline-none"
         />
 
-        <button className="bg-indigo-400 text-white rounded-md p-4 px-5 w-96 font-medium hover:opacity-85 focus:outline-none">
+        <button className="bg-indigo-400 text-white rounded-md p-4 px-5 w-96 font-semibold hover:opacity-85 focus:outline-none">
           {loading ? "Loading..." : "Sign In"}
         </button>
         <div className="text-center">

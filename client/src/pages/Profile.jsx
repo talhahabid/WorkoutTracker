@@ -4,6 +4,8 @@ import { useSignOut } from "../hooks/useSignOut";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useEditProfile } from "../hooks/useEditProfile";
 
+
+
 const Profile = () => {
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({
