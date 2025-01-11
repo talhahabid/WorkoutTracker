@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { apiReducer } from "../reducers/apireducer";
+import { apiReducer } from "../reducers/ApiReducer";
 
 const initialState = {
   loading: false,
