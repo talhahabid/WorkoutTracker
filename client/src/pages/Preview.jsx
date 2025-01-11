@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useEditProfile } from "../hooks/useEditProfile";
-
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 const Preview = () => {
   const { editProfile } = useEditProfile();
   const location = useLocation();
@@ -60,7 +60,7 @@ const Preview = () => {
   const CustomWorkout = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/workout/${user.user._id}`,
+        `${apiBaseUrl}/workout/${user.user._id}`,
         {
           method: "POST",
           headers: {

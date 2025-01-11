@@ -1,6 +1,6 @@
 import { useAuthContext } from "./useAuthContext";
 import { useApi } from "./useApi";
-
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 export const useEditProfile = () => {
   const { user, dispatch } = useAuthContext();
   const { loading, error, makeApiCall } = useApi();
@@ -9,7 +9,7 @@ export const useEditProfile = () => {
     if (!user) return;
     try {
       const data = await makeApiCall(() =>
-        fetch(`http://localhost:4000/user/profile/${user.user._id}`, {
+        fetch(`${apiBaseUrl}/user/profile/${user.user._id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

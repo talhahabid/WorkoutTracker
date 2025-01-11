@@ -1,15 +1,14 @@
 import { useAuthContext } from "./useAuthContext";
 import { useApi } from "./useApi";
-
+const apiBaseUrl = import.meta.env.VITE_API_URL;
 export const useEditExercise = () => {
   const { user } = useAuthContext();
   const { loading, error, makeApiCall } = useApi();
-
   const editExercise = async (_id, sets, reps, weight) => {
     if (!user) return;
 
     await makeApiCall(() =>
-      fetch(`http://localhost:4000/workout/${user.user._id}`, {
+      fetch(`${apiBaseUrl}/workout/${user.user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
