@@ -8,6 +8,8 @@
     "dev": "concurrently \"cd backend && npm run dev\" \"cd client && npm run dev\""
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "nodemon": "^2.0.20",
+    "vite": "^4.0.0"
   }
 }
