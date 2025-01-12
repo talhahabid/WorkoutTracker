@@ -71,7 +71,7 @@ export const populateWorkout = async (userId) => {
           { name: "Calf Raises", sets: 3, reps: 10, weight: 0 },
         ],
 
-        Sunday: [[]],
+        Sunday: [],
       },
 
       UpperLower: {
@@ -111,9 +111,9 @@ export const populateWorkout = async (userId) => {
           { name: "Seated Calf Raises", sets: 3, reps: 10, weight: 0 },
         ],
 
-        Saturday: [[]],
+        Saturday: [],
 
-        Sunday: [[]],
+        Sunday: [],
       },
 
       BroSplit: {
@@ -164,9 +164,9 @@ export const populateWorkout = async (userId) => {
           { name: "Hammer Curls", sets: 3, reps: 10, weight: 0 },
         ],
 
-        Saturday: [[]],
+        Saturday: [],
 
-        Sunday: [[]],
+        Sunday: [],
       },
 
       FullBody: {
