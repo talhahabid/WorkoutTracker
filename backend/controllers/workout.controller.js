@@ -74,13 +74,23 @@ export const editWorkout = async (req, res, next) => {
     const workoutSplit = user.workoutSplit;
     const workout = await Workout.findOne({ userId });
     if (!workout) return next(errorHandler(404, "Workout not found"));
-    console.log("Workout found");
+
+    // Log the entire workout plans structure
+    console.log(
+      "Full workout plans structure:",
+      JSON.stringify(workout.workoutPlans, null, 2)
+    );
+    console.log("Accessing:", `workoutPlans.${workoutSplit}.${date}`);
 
     const temp = workout.workoutPlans[workoutSplit][date];
     if (!temp) return next(errorHandler(404, "No workout found for today"));
-    console.log("Today's workout array:", JSON.stringify(temp, null, 2));
 
-    // Log all workout IDs before comparison
+    if (!Array.isArray(temp)) {
+      console.log("Unexpected temp structure:", temp);
+      return next(errorHandler(500, "Invalid workout structure"));
+    }
+
+    console.log("Today's workout array:", JSON.stringify(temp, null, 2));
     console.log(
       "Available workout IDs:",
       temp.map((w) => ({
