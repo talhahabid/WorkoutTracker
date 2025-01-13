@@ -64,7 +64,7 @@ export const editWorkout = async (req, res, next) => {
   const { userId } = req.params;
   const { _id, sets, reps, weight } = req.body;
   const date = getDayOfWeek();
-
+  console.log("wokring");
   try {
     const user = await User.findById(userId);
     if (!user) return next();
