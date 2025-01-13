@@ -86,15 +86,22 @@ const WorkoutSchedule = ({ date }) => {
   };
 
   const handleSaveClick = async (exercise) => {
+    const finalData = {
+      sets: exerciseData.sets || "0",
+      reps: exerciseData.reps || "0",
+      weight: exerciseData.weight || "0",
+    };
+
     await editExercise(
       exercise._id,
-      exerciseData.sets,
-      exerciseData.reps,
-      exerciseData.weight
+      finalData.sets,
+      finalData.reps,
+      finalData.weight
     );
-    exercise.sets = exerciseData.sets;
-    exercise.reps = exerciseData.reps;
-    exercise.weight = exerciseData.weight;
+
+    exercise.sets = finalData.sets;
+    exercise.reps = finalData.reps;
+    exercise.weight = finalData.weight;
     exercise.completed = exerciseData.completed;
     setEditingExercise(null);
   };
@@ -102,7 +109,7 @@ const WorkoutSchedule = ({ date }) => {
   const handleInputChange = (e, field) => {
     setExerciseData({
       ...exerciseData,
-      [field]: e.target.value === "" ? "0" : e.target.value,
+      [field]: e.target.value,
     });
   };
 
