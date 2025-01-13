@@ -6,7 +6,8 @@ export const useEditExercise = () => {
   const { loading, error, makeApiCall } = useApi();
   const editExercise = async (_id, sets, reps, weight) => {
     if (!user) return;
-
+    console.log("Sending data:", { _id, sets, reps, weight });
+    console.log("User ID:", user.user._id);
     await makeApiCall(() =>
       fetch(`${apiBaseUrl}/workout/${user.user._id}`, {
         method: "PUT",

@@ -7,8 +7,7 @@ export const useEditProfile = () => {
 
   const editProfile = async (username, password, workoutSplit) => {
     if (!user) return;
-    console.log("Sending data:", { _id, sets, reps, weight });
-    console.log("User ID:", user.user._id);
+
     try {
       const data = await makeApiCall(() =>
         fetch(`${apiBaseUrl}/user/profile/${user.user._id}`, {
