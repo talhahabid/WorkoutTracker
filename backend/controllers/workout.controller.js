@@ -68,22 +68,22 @@ export const editWorkout = async (req, res, next) => {
   try {
     const user = await User.findById(userId);
     if (!user) return next(errorHandler(404, "User not found"));
-
+    console.log("working")
     const workoutSplit = user.workoutSplit;
     const workout = await Workout.findOne({ userId });
     if (!workout) return next(errorHandler(404, "Workout not found"));
-
+    console.log("working1")
     const temp = workout.workoutPlans[workoutSplit][date];
     if (!temp) return next(errorHandler(404, "No workout found for today"));
-
+    console.log("working2")
     const workoutIndex = temp.findIndex((w) => {
       console.log(`Comparing: ${w._id.toString()} === ${_id}`);
       return w._id.toString() === _id;
     });
-
+    console.log("working3")
     if (workoutIndex === -1)
       return next(errorHandler(404, "Exercise not found"));
-
+    console.log("working4")
     temp[workoutIndex].sets = sets;
     temp[workoutIndex].reps = reps;
     temp[workoutIndex].weight = weight;
