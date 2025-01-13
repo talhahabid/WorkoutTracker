@@ -64,26 +64,44 @@ export const editWorkout = async (req, res, next) => {
   const { userId } = req.params;
   const { _id, sets, reps, weight } = req.body;
   const date = getDayOfWeek();
-  console.log(userId, _id, sets, reps, weight);
+  console.log("Input values:", { userId, _id, sets, reps, weight, date });
+
   try {
     const user = await User.findById(userId);
     if (!user) return next(errorHandler(404, "User not found"));
-    console.log("working")
+    console.log("User found:", user.workoutSplit);
+
     const workoutSplit = user.workoutSplit;
     const workout = await Workout.findOne({ userId });
     if (!workout) return next(errorHandler(404, "Workout not found"));
-    console.log("working1")
+    console.log("Workout found");
+
     const temp = workout.workoutPlans[workoutSplit][date];
     if (!temp) return next(errorHandler(404, "No workout found for today"));
-    console.log("working2")
+    console.log("Today's workout array:", JSON.stringify(temp, null, 2));
+
+    // Log all workout IDs before comparison
+    console.log(
+      "Available workout IDs:",
+      temp.map((w) => ({
+        id: w._id.toString(),
+        name: w.name,
+      }))
+    );
+    console.log("Looking for workout ID:", _id);
+
     const workoutIndex = temp.findIndex((w) => {
-      console.log(`Comparing: ${w._id.toString()} === ${_id}`);
-      return w._id.toString() === _id;
+      const workoutId = w._id.toString();
+      const matches = workoutId === _id;
+      console.log(`Comparing: ${workoutId} === ${_id} -> ${matches}`);
+      return matches;
     });
-    console.log("working3")
+
     if (workoutIndex === -1)
       return next(errorHandler(404, "Exercise not found"));
-    console.log("working4")
+
+    console.log("Found workout at index:", workoutIndex);
+
     temp[workoutIndex].sets = sets;
     temp[workoutIndex].reps = reps;
     temp[workoutIndex].weight = weight;
@@ -98,7 +116,6 @@ export const editWorkout = async (req, res, next) => {
     return next(errorHandler(500, error.message));
   }
 };
-
 // export const deleteWorkout = async (req, res, next) => {
 //   const { _id } = req.params;
 
