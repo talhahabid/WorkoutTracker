@@ -47,7 +47,7 @@ export const createCustomWorkoutSplit = async (req, res, next) => {
 
 export const getWorkout = async (req, res, next) => {
   const { userId } = req.params;
-  console.log(userId);
+
   try {
     const user = await User.findById(userId);
     const split = user.workoutSplit;
@@ -64,53 +64,19 @@ export const editWorkout = async (req, res, next) => {
   const { userId } = req.params;
   const { _id, sets, reps, weight } = req.body;
   const date = getDayOfWeek();
-  console.log("Input values:", { userId, _id, sets, reps, weight, date });
 
   try {
     const user = await User.findById(userId);
-    if (!user) return next(errorHandler(404, "User not found"));
-    console.log("User found:", user.workoutSplit);
-
+    if (!user) return next();
     const workoutSplit = user.workoutSplit;
+
     const workout = await Workout.findOne({ userId });
-    if (!workout) return next(errorHandler(404, "Workout not found"));
-
-    // Log the entire workout plans structure
-    console.log(
-      "Full workout plans structure:",
-      JSON.stringify(workout.workoutPlans, null, 2)
-    );
-    console.log("Accessing:", `workoutPlans.${workoutSplit}.${date}`);
-
+    if (!workout) return next();
     const temp = workout.workoutPlans[workoutSplit][date];
-    if (!temp) return next(errorHandler(404, "No workout found for today"));
+    if (!temp) return next();
 
-    if (!Array.isArray(temp)) {
-      console.log("Unexpected temp structure:", temp);
-      return next(errorHandler(500, "Invalid workout structure"));
-    }
-
-    console.log("Today's workout array:", JSON.stringify(temp, null, 2));
-    console.log(
-      "Available workout IDs:",
-      temp.map((w) => ({
-        id: w._id.toString(),
-        name: w.name,
-      }))
-    );
-    console.log("Looking for workout ID:", _id);
-
-    const workoutIndex = temp.findIndex((w) => {
-      const workoutId = w._id.toString();
-      const matches = workoutId === _id;
-      console.log(`Comparing: ${workoutId} === ${_id} -> ${matches}`);
-      return matches;
-    });
-
-    if (workoutIndex === -1)
-      return next(errorHandler(404, "Exercise not found"));
-
-    console.log("Found workout at index:", workoutIndex);
+    const workoutIndex = temp.findIndex((w) => w._id.toString() === _id);
+    if (workoutIndex === -1) return next();
 
     temp[workoutIndex].sets = sets;
     temp[workoutIndex].reps = reps;
@@ -123,9 +89,10 @@ export const editWorkout = async (req, res, next) => {
       workout: temp[workoutIndex],
     });
   } catch (error) {
-    return next(errorHandler(500, error.message));
+    return next(error);
   }
 };
+
 // export const deleteWorkout = async (req, res, next) => {
 //   const { _id } = req.params;
 
