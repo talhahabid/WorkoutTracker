@@ -64,19 +64,21 @@ export const editWorkout = async (req, res, next) => {
   const { userId } = req.params;
   const { _id, sets, reps, weight } = req.body;
   const date = getDayOfWeek();
-  console.log("wokring");
+
   try {
     const user = await User.findById(userId);
-    if (!user) return next();
-    const workoutSplit = user.workoutSplit;
+    if (!user) return next(errorHandler(404, "User not found"));
 
+    const workoutSplit = user.workoutSplit;
     const workout = await Workout.findOne({ userId });
-    if (!workout) return next();
+    if (!workout) return next(errorHandler(404, "Workout not found"));
+
     const temp = workout.workoutPlans[workoutSplit][date];
-    if (!temp) return next();
+    if (!temp) return next(errorHandler(404, "No workout found for today"));
 
     const workoutIndex = temp.findIndex((w) => w._id.toString() === _id);
-    if (workoutIndex === -1) return next();
+    if (workoutIndex === -1)
+      return next(errorHandler(404, "Exercise not found"));
 
     temp[workoutIndex].sets = sets;
     temp[workoutIndex].reps = reps;
@@ -89,7 +91,7 @@ export const editWorkout = async (req, res, next) => {
       workout: temp[workoutIndex],
     });
   } catch (error) {
-    return next(error);
+    return next(errorHandler(500, error.message));
   }
 };
 
