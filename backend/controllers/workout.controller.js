@@ -47,7 +47,7 @@ export const createCustomWorkoutSplit = async (req, res, next) => {
 
 export const getWorkout = async (req, res, next) => {
   const { userId } = req.params;
-
+  console.log(userId);
   try {
     const user = await User.findById(userId);
     const split = user.workoutSplit;
