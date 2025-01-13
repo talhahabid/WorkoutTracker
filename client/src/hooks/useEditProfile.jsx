@@ -24,6 +24,7 @@ export const useEditProfile = () => {
         user: {
           ...user.user,
           username: username || user.username,
+          password: password || user.password,
           workoutSplit: workoutSplit || user.user.workoutSplit,
         },
       };
